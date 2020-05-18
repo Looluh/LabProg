@@ -25,7 +25,19 @@ public class ThirdCam : MonoBehaviour
     {
         fakeObject.transform.position = Vector3.Lerp(fakeObject.transform.position, player.transform.position, Time.deltaTime * 10);
 
-        transform.position = fakeObject.transform.position + fakeObject.transform.forward * ajust.z + fakeObject.transform.up * ajust.y;
+        Vector3 dirback = transform.position - (player.transform.position + ajustLook);
+        float distanceToHit = 10;
+
+        if (Physics.Raycast(player.transform.position + ajustLook, dirback, out RaycastHit hit, 10, 65279))
+        {
+            distanceToHit = hit.distance;
+        }
+
+        Vector3 backVector = (fakeObject.transform.forward * ajust.z);
+
+        backVector = Vector3.ClampMagnitude(backVector, distanceToHit);
+
+        transform.position = fakeObject.transform.position + backVector + fakeObject.transform.up * ajust.y;
 
         transform.LookAt(player.transform.position + ajustLook);
 

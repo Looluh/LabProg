@@ -76,8 +76,7 @@ public class IAWalk : MonoBehaviour
 
         if (Vector3.Distance(transform.position, target.transform.position) < 10)
         {
-            patrolPosition = new Vector3(transform.position.x + Random.Range(-10, 10), transform.position.y, transform.position.z + Random.Range(-10, 10));
-
+            currentState = IaState.Berserk;
         }
 
     }
@@ -116,17 +115,18 @@ public class IAWalk : MonoBehaviour
 
     void Damage()
     {
-        agent.isStopped = true;
-        anim.SetBool("Attack", false);
-        anim.SetTrigger("Hit");
-        currentState = IaState.Stopped;
+            agent.isStopped = true;
+            anim.SetBool("Attack", false);
+            anim.SetTrigger("Hit");
+            currentState = IaState.Stopped;
+
     }
 
     void Dying()
     {
-        agent.isStopped = true;
-        anim.SetBool("Attack", false);
-        anim.SetBool("Die", true);
-        Destroy(gameObject, 5);
+            agent.isStopped = true;
+            anim.SetBool("Attack", false);
+            anim.SetBool("Die", true);
+            Destroy(gameObject, 5);
     }
 }
